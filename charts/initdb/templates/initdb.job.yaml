@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ory-init-db
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "initdb.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "initdb.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}    
+      containers:
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }} 
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ["/bin/sh"]
+        args:
+        - "-c"
+        - |
+          echo "starting init db" ;
+          echo "creating user $USER" ;
+          psql -c "CREATE USER $USER WITH PASSWORD '$PASSWORD';" ;
+          echo "creating db" ;
+          psql -c "CREATE DATABASE $DBNAME WITH OWNER $USER" ;
+          echo "finished"
+        {{ if or .Values.pg.existingSecret .Values.pg.createSecret }}
+        envFrom:
+        {{- if .Values.pg.existingSecret }}
+        - secretRef:
+            name: {{ .Values.pg.existingSecret }}
+        {{- else }}
+        - secretRef:
+            name: {{ include "initdb.secretName" . }}
+        {{ end }}
+        {{ end }}
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Never
