@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: {{ include "initdb.name" . }}-init-db
+  name: {{ include "initdb.name" . }}-init-db
 spec:
   template:
     metadata:
