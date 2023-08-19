@@ -3,12 +3,22 @@ entries:
   initdb:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-06-23T01:24:16.768545-07:00"
+    created: "2023-08-18T18:05:31.002448-07:00"
+    description: A Helm chart for Kubernetes
+    digest: 0bf45e0cf8b5dcdf77f5314bf98caacbc6833c441eae7353ec4f67d88437d70d
+    name: initdb
+    type: application
+    urls:
+    - https://CSBerger.github.io/basic_charts/charts/initdb-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-08-18T18:05:31.00207-07:00"
     description: A Helm chart for Kubernetes
     digest: f21959638ec911f60ddc77f0a99560b00344c1f21b4db0160161867feaf08a7d
     name: initdb
     type: application
     urls:
-    - https://csberger.github.io/basic_charts/charts/initdb-0.1.0.tgz
+    - https://CSBerger.github.io/basic_charts/charts/initdb-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-23T01:24:16.768214-07:00"
+generated: "2023-08-18T18:05:31.000479-07:00"
