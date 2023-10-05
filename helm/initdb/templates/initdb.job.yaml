@@ -31,8 +31,8 @@ spec:
         - |
           echo "starting init db" ;
           echo creating user \"$USER\" ;
+          echo creating db \"$DBNAME\" ;
           psql -c "CREATE USER \"$USER\" WITH PASSWORD '$PASSWORD'";
-          echo "creating db" ;
           psql -c "CREATE DATABASE \"$DBNAME\" WITH OWNER \"$USER\" ";
           echo "finished"
         {{ if or .Values.pg.existingSecret .Values.pg.createSecret }}
