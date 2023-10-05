@@ -6,6 +6,6 @@ helm package ./helm/initdb
 mv *.tgz charts
 
 #Update index.yml searching all first level subfolders for possible packaged charts
-cd ..
+#cd ..
 helm repo index . --url https://CSBerger.github.io/basic_charts
 ```

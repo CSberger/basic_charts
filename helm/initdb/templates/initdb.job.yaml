@@ -30,10 +30,10 @@ spec:
         - "-c"
         - |
           echo "starting init db" ;
-          echo "creating user $USER" ;
-          psql -c "CREATE USER $USER WITH PASSWORD '$PASSWORD';" ;
+          echo "creating user '$USER'" ;
+          psql -c "CREATE USER '$USER' WITH PASSWORD '$PASSWORD';" ;
           echo "creating db" ;
-          psql -c "CREATE DATABASE $DBNAME WITH OWNER $USER" ;
+          psql -c "CREATE DATABASE '$DBNAME' WITH OWNER '$USER'" ;
           echo "finished"
         {{ if or .Values.pg.existingSecret .Values.pg.createSecret }}
         envFrom:
